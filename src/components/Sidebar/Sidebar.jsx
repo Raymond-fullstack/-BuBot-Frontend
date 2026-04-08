@@ -10,7 +10,7 @@ import {
 import { SidebarItem } from './SidebarItem';
 import Busitema from '../../assets/busitema.png'
 
-export function Sidebar() {
+export function Sidebar({ convos, onSelectConversation, activeConversationId, onCreateNewConversation }) {
   return (
       <aside className="w-[280px] bg-surface-container-low flex flex-col py-6 border-r border-outline-variant/10">
         <div className="px-6 mb-8 flex items-center gap-3">
@@ -29,7 +29,10 @@ export function Sidebar() {
         </div>
 
         <div className="px-4 mb-8">
-          <button className="w-full py-3.5 px-6 rounded-full bg-primary-container text-on-primary-fixed font-bold flex items-center justify-center gap-2 hover:bg-primary-container/80 transition-all shadow-sm active:scale-95">
+          <button
+            className="w-full py-3.5 px-6 rounded-full bg-primary-container text-on-primary-fixed font-bold flex items-center justify-center gap-2 hover:bg-primary-container/80 transition-all shadow-sm active:scale-95"
+            onClick={onCreateNewConversation}
+          >
             <Plus size={20} strokeWidth={3} />
             <span>New Chat</span>
           </button>
@@ -39,10 +42,22 @@ export function Sidebar() {
           <div className="px-4 py-2">
             <span className="text-[10px] uppercase tracking-widest text-secondary font-bold">Recent Conversations</span>
           </div>
-          <SidebarItem icon={MessageSquare} label="Timetable Help" active />
+          {/* <SidebarItem icon={MessageSquare} label="Timetable Help" active />
           <SidebarItem icon={LogOut} label="Student Portal" />
           <SidebarItem icon={Search} label="Research Support" />
-          <SidebarItem icon={MapIcon} label="Campus Maps" />
+          <SidebarItem icon={MapIcon} label="Campus Maps" /> */}
+          {convos.map((convo) => (
+            <div 
+              key={convo.conversationId}
+              onClick={() => onSelectConversation(convo.conversationId)}
+            >
+              <SidebarItem 
+                title={convo.title} 
+                createdAt={convo.createdAt} 
+                active={convo.conversationId === activeConversationId}
+              />
+            </div>
+          ))}
         </nav>
 
         <div className="mt-auto px-2 space-y-1 pt-6 border-t border-outline-variant/10">
