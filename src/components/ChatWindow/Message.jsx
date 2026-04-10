@@ -1,10 +1,21 @@
+import { useState, useEffect } from 'react';
+import { MessageLoader } from '../MessageLoader';
+
 export function Message({ message, special = null }) {
   const isBot = message.sender === "Bot";
+  const [showLoader, setShowLoader] = useState(isBot);
 
   const time = new Date(message.timestamp).toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit'
   });
+
+  useEffect(() => {
+    if (isBot) {
+      const timer = setTimeout(() => setShowLoader(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isBot]);
 
   return (
     <div className={`flex flex-col gap-2 max-w-[85%] ${isBot ? 'items-start' : 'items-end ml-auto'}`}>
@@ -23,7 +34,7 @@ export function Message({ message, special = null }) {
           ? 'bg-surface-container-lowest ghost-border rounded-bl-sm' 
           : 'bg-primary-container text-on-primary-fixed font-medium rounded-br-sm'
       }`}>
-        <p className="text-sm leading-relaxed">{message.text}</p>
+        {showLoader ? <MessageLoader /> : <p className="text-sm leading-relaxed">{message.text}</p>}
       </div>
 
       {special}

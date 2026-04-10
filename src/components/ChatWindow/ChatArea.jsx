@@ -6,7 +6,7 @@ export function ChatArea({ messages }) {
 const groupedDate = formatDate(messages[0]?.timestamp);
 
   return (
-    <div className="flex-1 overflow-y-auto pt-8 pb-32 px-6 md:px-12 lg:px-24">
+    <div className="flex-1 overflow-y-auto custom-scrollbar pt-8 pb-32 px-6 md:px-12 lg:px-24">
       <div className="max-w-4xl mx-auto space-y-8">
 
         <div className="flex justify-center">

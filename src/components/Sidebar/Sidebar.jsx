@@ -10,7 +10,24 @@ import {
 import { SidebarItem } from './SidebarItem';
 import Busitema from '../../assets/busitema.png'
 
-export function Sidebar({ convos, onSelectConversation, activeConversationId, onCreateNewConversation }) {
+export function Sidebar({ convos, onSelectConversation, activeConversationId, onCreateNewConversation, onDeleteConversation }) {
+  const handleDeleteConversation = async (conversationId) => {
+    try {
+      const response = await fetch(`/api/conversations/${conversationId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        onDeleteConversation(conversationId);
+      } else {
+        alert('Failed to delete conversation');
+      }
+    } catch (error) {
+      console.error('Error deleting conversation:', error);
+      alert('Error deleting conversation');
+    }
+  };
+
   return (
       <aside className="w-[280px] bg-surface-container-low flex flex-col py-6 border-r border-outline-variant/10">
         <div className="px-6 mb-8 flex items-center gap-3">
@@ -38,7 +55,7 @@ export function Sidebar({ convos, onSelectConversation, activeConversationId, on
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-2 space-y-1">
+        <nav className="flex-1 overflow-y-auto custom-scrollbar px-2 space-y-1">
           <div className="px-4 py-2">
             <span className="text-[10px] uppercase tracking-widest text-secondary font-bold">Recent Conversations</span>
           </div>
@@ -55,6 +72,7 @@ export function Sidebar({ convos, onSelectConversation, activeConversationId, on
                 title={convo.title} 
                 createdAt={convo.createdAt} 
                 active={convo.conversationId === activeConversationId}
+                onDelete={() => handleDeleteConversation(convo.conversationId)}
               />
             </div>
           ))}

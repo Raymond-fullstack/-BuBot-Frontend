@@ -90,6 +90,17 @@ export function Chat() {
   setMessages([]);
 };
 
+const handleDeleteConversation = (conversationId) => {
+  // Remove from conversations list
+  setConvos(prev => prev.filter(convo => convo.conversationId !== conversationId));
+
+  // If deleted conversation was active, clear it
+  if (activeConversationId === conversationId) {
+    setActiveConversationId(null);
+    setMessages([]);
+  }
+};
+
   return (
     <div className="flex h-screen overflow-hidden bg-surface">
       <Sidebar
@@ -97,6 +108,7 @@ export function Chat() {
         onSelectConversation={setActiveConversationId}
         activeConversationId={activeConversationId}
         onCreateNewConversation={handleCreateNewConversation}
+        onDeleteConversation={handleDeleteConversation}
       />
 
       <ChatWindow
