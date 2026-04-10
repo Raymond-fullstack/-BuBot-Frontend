@@ -79,8 +79,14 @@ export function Sidebar({ convos, onSelectConversation, activeConversationId, on
         </nav>
 
         <div className="mt-auto px-2 space-y-1 pt-6 border-t border-outline-variant/10">
-          <SidebarItem icon={Settings} label="Settings" />
-          <SidebarItem icon={HelpCircle} label="Help Center" />
+          <button className="w-full flex items-center gap-3 py-3 px-4 rounded-xl text-secondary hover:text-on-surface hover:bg-surface-container-highest/50 transition-all duration-200">
+            <Settings size={20} />
+            <span className="text-sm font-semibold">Settings</span>
+          </button>
+          <button className="w-full flex items-center gap-3 py-3 px-4 rounded-xl text-secondary hover:text-on-surface hover:bg-surface-container-highest/50 transition-all duration-200">
+            <HelpCircle size={20} />
+            <span className="text-sm font-semibold">Help Center</span>
+          </button>
         </div>
       </aside>
   )
